@@ -2,6 +2,7 @@
 
 class CategoriesController < ApplicationController
   def index
-    render html: "This is index action of Categories controller"
+    categories = Category.all
+    render status: :ok, json: { categories: categories }
   end
 end
