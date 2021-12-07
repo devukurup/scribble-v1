@@ -1,11 +1,16 @@
 module.exports = {
+  important: true,
   future: {
     // removeDeprecatedGapUtilities: true,
     // purgeLayersByDefault: true,
   },
   purge: [],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'link-inactive': '#9CA3AF',
+      }
+    },
   },
   variants: {},
   plugins: [],
