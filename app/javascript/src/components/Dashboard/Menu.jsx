@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 
-import { Search, Plus, Check, Close } from "@bigbinary/neeto-icons";
+import { Search, Plus, Close } from "@bigbinary/neeto-icons";
 import { Typography, Input } from "@bigbinary/neetoui/v2";
 import { MenuBar } from "@bigbinary/neetoui/v2/layouts";
+
+import Add from "../Categories/Add";
 
 const Menu = () => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
@@ -44,7 +46,7 @@ const Menu = () => {
 
         {!isAddCollapsed && (
           <div className="p-2">
-            <Input suffix={<Check />} />
+            <Add setIsAddCollapsed={setIsAddCollapsed} />
           </div>
         )}
         {!isSearchCollapsed && (
