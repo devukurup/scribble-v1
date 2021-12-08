@@ -2,6 +2,7 @@
 
 class Category < ApplicationRecord
   MAX_LENGTH = 255
+  acts_as_list column: :sequence
 
   belongs_to :user
 

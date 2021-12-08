@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
+  before_action :load_category, only: %i[update]
+
   def index
-    categories = current_user.categories.order("created_at DESC")
+    categories = current_user.categories.order("sequence")
     render status: :ok, json: { categories: categories }
   end
 
@@ -16,9 +18,22 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def update
+    unless @category.update(category_params)
+      render status: :unprocessable_entity, json: { error: t("category.update_error") }
+    end
+  end
+
   private
 
     def category_params
-      params.require(:category).permit(:name)
+      params.require(:category).permit(:name, :sequence)
+    end
+
+    def load_category
+      @category = Category.find_by_id(params[:id])
+      unless @category
+        render status: :not_found, json: { error: t("category.not_found") }
+      end
     end
 end

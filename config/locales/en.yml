@@ -1,3 +1,5 @@
 en:
   category:
-    successfully_created: "Successfully created new Category."
+    successfully_created: "Successfully created new Category"
+    not_found: "Category not found"
+    update_error: "Couldn't update Category"

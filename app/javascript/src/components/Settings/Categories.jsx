@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Plus } from "@bigbinary/neeto-icons";
 import { Typography, Button } from "@bigbinary/neetoui/v2";
 
+import List from "./List";
 import Menu from "./Menu";
 
 import Add from "../Categories/Add";
@@ -19,7 +20,7 @@ const Categories = () => {
           <Typography style="body2">
             Create and configure the categories inside your scribble.
           </Typography>
-          <div className="align-left pt-5">
+          <div className="align-left pt-5 pb-5">
             {isAddCollapsed && (
               <Button
                 label="Add new category"
@@ -31,6 +32,7 @@ const Categories = () => {
             )}
             {!isAddCollapsed && <Add setIsAddCollapsed={setIsAddCollapsed} />}
           </div>
+          <List />
         </div>
       </div>
     </Container>
