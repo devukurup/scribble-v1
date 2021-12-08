@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :load_category, only: %i[update]
+  before_action :load_category, only: %i[update destroy]
 
   def index
     categories = current_user.categories.order("sequence")
@@ -21,6 +21,14 @@ class CategoriesController < ApplicationController
   def update
     unless @category.update(category_params)
       render status: :unprocessable_entity, json: { error: t("category.update_error") }
+    end
+  end
+
+  def destroy
+    if @category.destroy
+      render status: :ok, json: { notice: t("category.successfully_deleted") }
+    else
+      render status: :unprocessable_entity, json: { error: @category.errors.full_messages.to_sentence }
     end
   end
 

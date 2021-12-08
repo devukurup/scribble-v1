@@ -6,11 +6,13 @@ import { MenuBar } from "@bigbinary/neetoui/v2/layouts";
 
 import categoriesApi from "apis/categories";
 
+import { useCategory } from "../../contexts/categories";
 import Add from "../Categories/Add";
 
 const Menu = () => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
+  const { isCategoryUpdated } = useCategory();
   const [categoriesList, setCategoriesList] = useState([]);
 
   const fetchCategories = async () => {
@@ -24,7 +26,7 @@ const Menu = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, [isAddCollapsed]);
+  }, [isCategoryUpdated]);
 
   return (
     <>

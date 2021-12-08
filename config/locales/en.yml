@@ -3,3 +3,4 @@ en:
     successfully_created: "Successfully created new Category"
     not_found: "Category not found"
     update_error: "Couldn't update Category"
+    successfully_deleted: "Successfully deleted"
