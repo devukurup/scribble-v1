@@ -31,6 +31,7 @@
     "formik": "2.2.0",
     "js-logger": "^1.6.1",
     "prop-types": "^15.7.2",
+    "ramda": "^0.27.1",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
@@ -39,6 +40,7 @@
     "react-table": "^7.7.0",
     "react-toastify": "8.0.2",
     "react_ujs": "^2.6.1",
+    "remixicon": "^2.5.0",
     "tailwindcss": "1.9.6",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"

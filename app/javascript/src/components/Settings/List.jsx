@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import { Typography } from "@bigbinary/neetoui/v2";
+import { Edit, Delete } from "@bigbinary/neeto-icons";
+import { Typography, Button } from "@bigbinary/neetoui/v2";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import categoriesApi from "apis/categories";
@@ -43,15 +44,22 @@ const List = () => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       ref={provided.innerRef}
-                      className="p-3 border"
+                      className="p-3 border-t flex space-x-2 items-center justify-between"
                     >
-                      <Typography
-                        size="body2"
-                        textTransform="capitalize"
-                        weight="semibold"
-                      >
-                        {name}
-                      </Typography>
+                      <div className="flex space-x-2">
+                        <i className="ri-drag-move-2-line text-sm text-gray-500"></i>
+                        <Typography
+                          size="body2"
+                          textTransform="capitalize"
+                          weight="medium"
+                        >
+                          {name}
+                        </Typography>
+                      </div>
+                      <div className="flex space-x-2">
+                        <Button style="text" icon={Delete} />
+                        <Button style="text" icon={Edit} />
+                      </div>
                     </li>
                   )}
                 </Draggable>
