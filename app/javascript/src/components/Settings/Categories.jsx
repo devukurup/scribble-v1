@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { Plus } from "@bigbinary/neeto-icons";
 import { Typography, Button } from "@bigbinary/neetoui/v2";
 
+import Add from "components/Categories/Add";
+import Container from "components/Container";
+
 import List from "./List";
 import Menu from "./Menu";
-
-import Add from "../Categories/Add";
-import Container from "../Container";
 
 const Categories = () => {
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);

@@ -1,8 +1,8 @@
 import React from "react";
 
-import Menu from "./Menu";
+import Container from "components/Container";
 
-import Container from "../Container";
+import Menu from "./Menu";
 
 const index = () => {
   return (

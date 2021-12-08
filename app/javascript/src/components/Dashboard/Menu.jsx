@@ -5,9 +5,8 @@ import { Typography, Input } from "@bigbinary/neetoui/v2";
 import { MenuBar } from "@bigbinary/neetoui/v2/layouts";
 
 import categoriesApi from "apis/categories";
-
-import { useCategory } from "../../contexts/categories";
-import Add from "../Categories/Add";
+import Add from "components/Categories/Add";
+import { useCategory } from "contexts/categories";
 
 const Menu = () => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);

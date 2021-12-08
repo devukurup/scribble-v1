@@ -5,8 +5,7 @@ import { Input } from "@bigbinary/neetoui/v2";
 import { either, isEmpty, isNil } from "ramda";
 
 import categoriesApi from "apis/categories";
-
-import { useCategory } from "../../contexts/categories";
+import { useCategory } from "contexts/categories";
 
 const Add = ({ setIsAddCollapsed }) => {
   const [name, setName] = useState("");

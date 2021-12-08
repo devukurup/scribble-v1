@@ -5,9 +5,8 @@ import { Typography, Button, Input } from "@bigbinary/neetoui/v2";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import categoriesApi from "apis/categories";
+import Delete from "components/Categories/Delete";
 import { useCategory } from "contexts/categories";
-
-import Delete from "../Categories/Delete";
 
 const List = () => {
   const [categoriesList, setCategoriesList] = useState([]);

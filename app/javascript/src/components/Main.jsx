@@ -4,9 +4,8 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import Dashboard from "components/Dashboard";
-
-import Settings from "./Settings";
-import Categories from "./Settings/Categories";
+import Settings from "components/Settings";
+import Categories from "components/Settings/Categories";
 
 const Main = () => {
   return (
