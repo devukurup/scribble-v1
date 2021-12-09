@@ -13,9 +13,9 @@ const Categories = () => {
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
   return (
     <Container>
-      <div className="flex">
+      <div className="flex ">
         <Menu />
-        <div className="flex flex-col mx-auto pt-10 ">
+        <div className="flex flex-col mx-auto pt-10 w-5/12">
           <Typography style="h2">Manage Categories</Typography>
           <Typography style="body2">
             Create and configure the categories inside your scribble.
