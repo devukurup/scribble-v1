@@ -5,6 +5,7 @@ class Category < ApplicationRecord
   acts_as_list column: :sequence
 
   belongs_to :user
+  has_many :articles
 
   validates :name, presence: true, uniqueness: true, length: { maximum: MAX_LENGTH }
 
