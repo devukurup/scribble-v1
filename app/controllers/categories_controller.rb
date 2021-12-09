@@ -4,8 +4,7 @@ class CategoriesController < ApplicationController
   before_action :load_category, only: %i[update destroy]
 
   def index
-    categories = current_user.categories.order("sequence")
-    render status: :ok, json: { categories: categories }
+    @categories = current_user.categories.order("sequence")
   end
 
   def create

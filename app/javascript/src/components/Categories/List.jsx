@@ -5,8 +5,9 @@ import { Typography, Button, Input } from "@bigbinary/neetoui/v2";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import categoriesApi from "apis/categories";
-import Delete from "components/Categories/Delete";
 import { useCategory } from "contexts/categories";
+
+import Delete from "./Delete";
 
 const List = () => {
   const [categoriesList, setCategoriesList] = useState([]);
@@ -76,7 +77,7 @@ const List = () => {
                       >
                         {editId !== id && (
                           <div className="p-3 border-t flex space-x-2 items-center justify-between">
-                            <div className="flex space-x-2">
+                            <div className="flex space-x-2 items-center">
                               <i className="ri-drag-move-2-line text-sm text-gray-500"></i>
                               <Typography
                                 size="body2"

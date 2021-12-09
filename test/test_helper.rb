@@ -5,6 +5,7 @@ require_relative "../config/environment"
 require "rails/test_help"
 
 class ActiveSupport::TestCase
+  include ActionView::Helpers::TranslationHelper
   include FactoryBot::Syntax::Methods
 
   # Run tests in parallel with specified workers

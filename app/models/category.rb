@@ -5,6 +5,15 @@ class Category < ApplicationRecord
   acts_as_list column: :sequence
 
   belongs_to :user
+  has_many :articles
 
-  validates :name, presence: true, length: { maximum: MAX_LENGTH }
+  validates :name, presence: true, uniqueness: true, length: { maximum: MAX_LENGTH }
+
+  before_validation :to_lowercase
+
+  private
+
+    def to_lowercase
+      name.downcase!
+    end
 end

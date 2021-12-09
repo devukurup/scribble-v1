@@ -5,6 +5,7 @@ class User < ApplicationRecord
   VALID_EMAIL = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i.freeze
 
   has_many :categories
+  has_many :articles
 
   validates :email, presence: true, uniqueness: true, format: { with: VALID_EMAIL }
   validates :first_name, presence: true, length: { maximum: MAX_LENGTH }
