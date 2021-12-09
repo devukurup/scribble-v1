@@ -6,5 +6,13 @@ class Category < ApplicationRecord
 
   belongs_to :user
 
-  validates :name, presence: true, length: { maximum: MAX_LENGTH }
+  validates :name, presence: true, uniqueness: true, length: { maximum: MAX_LENGTH }
+
+  before_validation :to_lowercase
+
+  private
+
+    def to_lowercase
+      name.downcase!
+    end
 end
