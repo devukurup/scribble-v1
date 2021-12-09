@@ -2,6 +2,9 @@
 
 FactoryBot.define do
   factory :article do
-    title { "MyString" }
+    title { Faker::Lorem.sentence[0..20] }
+    status { "draft" }
+    user
+    category
   end
 end

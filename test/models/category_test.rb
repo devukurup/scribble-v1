@@ -17,7 +17,7 @@ class CategoryTest < ActiveSupport::TestCase
     assert_includes @category.errors.full_messages, "Name can't be blank"
   end
 
-  def test_category_should_be_invalid_without_quiz
+  def test_category_should_be_invalid_without_user
     @category.user = nil
     assert @category.invalid?
     assert_includes @category.errors.full_messages, "User must exist"
