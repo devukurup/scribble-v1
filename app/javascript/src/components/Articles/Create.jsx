@@ -1,80 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import {
-  Input,
-  Select,
-  Textarea,
-  Typography,
-  Dropdown,
-  Button,
-} from "@bigbinary/neetoui/v2";
+import { useHistory } from "react-router";
 
-import Container from "components/Container";
+import articlesApi from "apis/articles";
+import categoriesApi from "apis/categories";
+
+import DataForm from "./Form";
 
 const Create = () => {
+  const history = useHistory();
+  const [categoryList, setCategoryList] = useState([]);
+
+  const [status, setStatus] = useState("Save Draft");
+
+  const fetchCategories = async () => {
+    try {
+      const response = await categoriesApi.list();
+      setCategoryList(response.data.categories);
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const initialValues = {
+    title: "",
+    content: "",
+    category: "",
+  };
+
+  const handleSubmit = async data => {
+    const category_id = data.category.value;
+    const title = data.title;
+    const content = data.content;
+    const status = status === "Save Draft" ? "draft" : "published";
+    try {
+      await articlesApi.create({
+        article: { title, content, status, category_id },
+      });
+      history.push("/");
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   return (
-    <Container>
-      <div className="flex flex-col justify-center mx-auto mt-24 w-6/12 space-y-8">
-        <div className="flex space-x-3 justify-evenly">
-          <Input
-            size="large"
-            label={<Typography style="body2">Article Title</Typography>}
-          />
-          <Select
-            isSearchable
-            isClearable
-            label={<Typography style="body2">Category</Typography>}
-            name="ValueList"
-            placeholder=""
-            options={[
-              {
-                label: "Value One",
-                value: "value1",
-              },
-              {
-                label: "Value Two",
-                value: "value2",
-              },
-              {
-                label: "Value Three",
-                value: "value3",
-              },
-              {
-                label: "Value Four",
-                value: "value4",
-              },
-              {
-                label: "Value Five",
-                value: "value5",
-              },
-            ]}
-          />
-        </div>
-
-        <Textarea
-          rows="10"
-          error=""
-          label={<Typography style="body2">Article Body</Typography>}
-        />
-
-        <div className="flex space-x-5">
-          <div className="flex">
-            <Button className="bg-indigo-500" label="Save Draft" />
-            <Dropdown
-              className="bg-indigo-500"
-              buttonProps={{
-                onClick: function noRefCheck() {},
-              }}
-              buttonStyle="text"
-              position="bottom"
-            >
-              <li>Publish Article</li>
-            </Dropdown>
-          </div>
-          <Button style="text" label="Cancel" />
-        </div>
-      </div>
-    </Container>
+    <DataForm
+      categoryList={categoryList}
+      handleSubmit={handleSubmit}
+      initialValues={initialValues}
+      status={status}
+      setStatus={setStatus}
+    />
   );
 };
 

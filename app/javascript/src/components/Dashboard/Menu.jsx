@@ -12,12 +12,12 @@ const Menu = () => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
   const { isCategoryUpdated } = useCategory();
-  const [categoriesList, setCategoriesList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
 
   const fetchCategories = async () => {
     try {
       const response = await categoriesApi.list();
-      setCategoriesList(response.data.categories);
+      setCategoryList(response.data.categories);
     } catch (error) {
       logger.error(error);
     }
@@ -72,7 +72,7 @@ const Menu = () => {
             <Input prefix={<Search />} />
           </div>
         )}
-        {categoriesList.map(item => (
+        {categoryList.map(item => (
           <MenuBar.Block key={item.id} label={item.name} count={80} />
         ))}
       </MenuBar>
