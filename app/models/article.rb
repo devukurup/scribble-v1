@@ -2,6 +2,7 @@
 
 class Article < ApplicationRecord
   MAX_LENGTH = 255
+  MIN_LENGTH = 10
 
   enum status: { draft: "draft", published: "published" }
 
@@ -9,6 +10,7 @@ class Article < ApplicationRecord
   belongs_to :category
 
   validates :title, presence: true, length: { maximum: MAX_LENGTH }
+  validates :content, presence: true, length: { minimum: MIN_LENGTH }
   validates :status, presence: true
 
   before_validation :set_published_date
