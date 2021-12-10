@@ -13,7 +13,7 @@ const index = () => {
         <div>
           <Menu />
         </div>
-        <div className="mx-10 mt-5">
+        <div className="flex flex-col mx-10 mt-5 w-full">
           <Header />
           <Table />
         </div>

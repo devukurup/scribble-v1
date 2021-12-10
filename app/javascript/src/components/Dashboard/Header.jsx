@@ -25,11 +25,13 @@ const Header = () => {
               <Checkbox key={index} label={item} className="p-2" />
             ))}
           </Dropdown>
+
           <Button
             label="Add New Article"
             className="bg-indigo-500"
             icon={Plus}
             iconPosition="right"
+            to="/article/create"
           />
         </div>
       }
