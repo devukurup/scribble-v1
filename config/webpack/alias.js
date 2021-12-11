@@ -5,6 +5,7 @@ module.exports = {
       common: "src/common",
       components: "src/components",
       contexts: "src/contexts",
+      utils: "src/utils"
     }
   }
 };
