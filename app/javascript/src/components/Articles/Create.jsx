@@ -36,10 +36,10 @@ const Create = () => {
     const category_id = data.category.value;
     const title = data.title;
     const content = data.content;
-    const status = status === "Save Draft" ? "draft" : "published";
+    const optedStatus = status === "Save Draft" ? "draft" : "published";
     try {
       await articlesApi.create({
-        article: { title, content, status, category_id },
+        article: { title, content, status: optedStatus, category_id },
       });
       history.push("/");
     } catch (error) {

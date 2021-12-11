@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   defaults format: :json do
     resources :categories, only: %i[index create update destroy]
-    resources :articles, only: %i[index create] do
+    resources :articles, only: %i[index create destroy] do
       get "list_table_data", on: :collection
     end
   end

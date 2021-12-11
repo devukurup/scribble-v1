@@ -6,3 +6,5 @@ en:
     successfully_deleted: "Successfully deleted"
   article:
     successfully_created: "Successfully created new Article"
+    not_found: "Article Not Found"
+    successfully_deleted: "Successfully deleted"

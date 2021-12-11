@@ -6,12 +6,15 @@ import { Link } from "react-router-dom";
 import { useTable } from "react-table";
 
 import articlesApi from "apis/articles";
+import Delete from "components/Articles/Delete";
 import { columnList } from "utils/columnList";
 
 const Table = () => {
   const columns = useMemo(() => columnList, []);
 
   const [articleList, setArticleList] = useState([]);
+  const [isDeleteArticle, setIsDeleteArticle] = useState(false);
+  const [deleteData, setDeleteData] = useState({});
 
   const fetchArticles = async () => {
     try {
@@ -26,23 +29,34 @@ const Table = () => {
   }, []);
 
   const rowData = articleList.map(item => {
-    item.userName = `${item.first_name} ${item.last_name}`;
-    item.title = (
-      <Typography weight="medium" className="text-indigo-500">
-        {item.title}
-      </Typography>
-    );
-    item.edit_delete = (
+    const newItem = {};
+    newItem.userName = `${item.first_name} ${item.last_name}`;
+    newItem.edit_delete = (
       <div className="flex space-x-3 justify-end">
         <Tooltip content="Delete" position="bottom">
-          <Button label={<i className="ri-delete-bin-line"></i>} style="text" />
+          <Button
+            label={<i className="ri-delete-bin-line"></i>}
+            onClick={() => {
+              setIsDeleteArticle(true);
+              setDeleteData({ ...item });
+            }}
+            style="text"
+          />
         </Tooltip>
         <Tooltip content="Edit" position="bottom">
           <Link to="/">{<i className="ri-pencil-line"></i>}</Link>
         </Tooltip>
       </div>
     );
-    return item;
+    newItem.title = (
+      <Typography weight="medium" className="text-indigo-500">
+        {item.title}
+      </Typography>
+    );
+    newItem.date = item.date;
+    newItem.name = item.name;
+    newItem.status = item.status;
+    return newItem;
   });
 
   const data = useMemo(() => rowData, [articleList]);
@@ -98,6 +112,14 @@ const Table = () => {
           })}
         </tbody>
       </table>
+      {isDeleteArticle && (
+        <Delete
+          deleteData={deleteData}
+          setIsDeleteArticle={setIsDeleteArticle}
+          fetchArticles={fetchArticles}
+          isDeleteArticle={isDeleteArticle}
+        />
+      )}
     </div>
   );
 };
