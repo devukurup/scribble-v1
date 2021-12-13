@@ -44,7 +44,7 @@ class ArticleTest < ActiveSupport::TestCase
   def test_date_gets_updated_when_status_is_published
     @article.status = "published"
     @article.save!
-    assert_equal Date.current, @article.date
+    assert_equal Date.current.strftime("%B %dth, %Y"), @article.date
   end
 
   def test_date_should_not_get_updated_when_status_is_draft

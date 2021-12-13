@@ -1,15 +1,18 @@
 import axios from "axios";
 
-const tableData = () => axios.get("/articles/list_table_data");
+const list = () => axios.get("/articles");
 
 const create = payload => axios.post("/articles/", payload);
 
 const destroy = id => axios.delete(`/articles/${id}`);
 
+const update = ({ id, payload }) => axios.put(`/articles/${id}`, payload);
+
 const articlesApi = {
   create,
-  tableData,
+  list,
   destroy,
+  update,
 };
 
 export default articlesApi;

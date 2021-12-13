@@ -4,7 +4,9 @@ en:
     not_found: "Category not found"
     update_error: "Couldn't update Category"
     successfully_deleted: "Successfully deleted"
+    articles_update_error: "Couldn't update category of article"
   article:
     successfully_created: "Successfully created new Article"
     not_found: "Article Not Found"
     successfully_deleted: "Successfully deleted"
+    successfully_updated: "Successfully updated"

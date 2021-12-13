@@ -18,7 +18,7 @@ const Main = () => {
         <Route exact path="/settings" component={Settings} />
         <Route exact path="/settings/categories" component={Categories} />
         <Route exact path="/article/create" component={Create} />
-        <Route exact path="/article/edit" component={Edit} />
+        <Route exact path="/article/:id/edit" component={Edit} />
       </Switch>
     </Router>
   );

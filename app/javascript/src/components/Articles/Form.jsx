@@ -15,6 +15,14 @@ const DataForm = ({
   setStatus,
 }) => {
   const statusList = ["Save Draft", "Publish"];
+  var selectedCategory = categoryList.find(
+    cat => cat.name === initialValues.category
+  );
+  selectedCategory = {
+    label: selectedCategory?.name,
+    value: selectedCategory?.id,
+  };
+
   const getStatus = () => {
     return status === statusList[0] ? statusList[1] : statusList[0];
   };
@@ -45,6 +53,7 @@ const DataForm = ({
               />
               <Select
                 isSearchable
+                defaultValue={selectedCategory ? selectedCategory : ""}
                 label={<Typography style="body2">Category</Typography>}
                 name="category"
                 options={categoryList.map(item => {

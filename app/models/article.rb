@@ -19,7 +19,7 @@ class Article < ApplicationRecord
 
     def set_published_date
       if self.date.nil?
-        self.date = Date.current if self.published?
+        self.date = Date.current.strftime("%B %dth, %Y") if self.published?
       else
         self.date = nil if self.draft?
       end

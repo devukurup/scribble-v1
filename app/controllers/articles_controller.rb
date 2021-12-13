@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
-  before_action :load_article, only: %i[destroy]
+  before_action :load_article, only: %i[destroy update]
 
-  def list_table_data
-    @articles = Article.joins(:user, :category)
-      .select("articles.*, categories.name, users.first_name, users.last_name")
+  def index
+    @articles = Article.all
   end
 
   def create
@@ -21,6 +20,14 @@ class ArticlesController < ApplicationController
   def destroy
     if @article.destroy
       render status: :ok, json: { notice: t("article.successfully_deleted") }
+    else
+      render status: :unprocessable_entity, json: { error: @article.errors.full_messages.to_sentence }
+    end
+  end
+
+  def update
+    if @article.update(article_params)
+      render status: :ok, json: { notice: t("article.successfully_updated") }
     else
       render status: :unprocessable_entity, json: { error: @article.errors.full_messages.to_sentence }
     end

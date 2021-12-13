@@ -18,7 +18,7 @@ const Table = () => {
 
   const fetchArticles = async () => {
     try {
-      const response = await articlesApi.tableData();
+      const response = await articlesApi.list();
       setArticleList(response.data.articles);
     } catch (error) {
       logger.error(error);
@@ -44,7 +44,14 @@ const Table = () => {
           />
         </Tooltip>
         <Tooltip content="Edit" position="bottom">
-          <Link to="/">{<i className="ri-pencil-line"></i>}</Link>
+          <Link
+            to={{
+              pathname: `/article/${item.id}/edit`,
+              state: { item },
+            }}
+          >
+            {<i className="ri-pencil-line"></i>}
+          </Link>
         </Tooltip>
       </div>
     );
@@ -99,7 +106,7 @@ const Table = () => {
                 {row.cells.map((cell, index) => {
                   return (
                     <td
-                      className="capitalize text-left text-base py-2 px-1 "
+                      className="capitalize text-left text-base py-2 px-1 break-all"
                       key={index}
                       {...cell.getCellProps()}
                     >
