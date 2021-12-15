@@ -8,7 +8,7 @@ import categoriesApi from "apis/categories";
 import Add from "components/Categories/Add";
 import { useCategory } from "contexts/categories";
 
-const Menu = () => {
+const Menu = ({ articleData }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
   const { isCategoryUpdated } = useCategory();
@@ -30,9 +30,9 @@ const Menu = () => {
   return (
     <>
       <MenuBar showMenu={true} title="Articles">
-        <MenuBar.Block label="All" count={13} active />
-        <MenuBar.Block label="Draft" count={2} />
-        <MenuBar.Block label="Published" count={7} />
+        <MenuBar.Block label="All" count={articleData.all} active />
+        <MenuBar.Block label="Draft" count={articleData.draft} />
+        <MenuBar.Block label="Published" count={articleData.published} />
 
         <MenuBar.SubTitle
           iconProps={[
@@ -73,7 +73,12 @@ const Menu = () => {
           </div>
         )}
         {categoryList.map(item => (
-          <MenuBar.Block key={item.id} label={item.name} count={80} />
+          <MenuBar.Block
+            className="capitalize"
+            key={item.id}
+            label={item.name}
+            count={item.count}
+          />
         ))}
       </MenuBar>
     </>

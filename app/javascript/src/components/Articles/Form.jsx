@@ -19,7 +19,11 @@ const DataForm = ({
     cat => cat.name === initialValues.category
   );
   selectedCategory = {
-    label: selectedCategory?.name,
+    label: (
+      <Typography style="body2" textTransform="capitalize">
+        {selectedCategory?.name}
+      </Typography>
+    ),
     value: selectedCategory?.id,
   };
 
@@ -58,7 +62,11 @@ const DataForm = ({
                 name="category"
                 options={categoryList.map(item => {
                   var newItem = {};
-                  newItem.label = item.name;
+                  newItem.label = (
+                    <Typography style="body2" textTransform="capitalize">
+                      {item.name}
+                    </Typography>
+                  );
                   newItem.value = item.id;
                   return newItem;
                 })}

@@ -1,32 +1,19 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { Typography, Button } from "@bigbinary/neetoui/v2";
 import { Tooltip } from "@bigbinary/neetoui/v2";
 import { Link } from "react-router-dom";
 import { useTable } from "react-table";
 
-import articlesApi from "apis/articles";
 import Delete from "components/Articles/Delete";
+import { useArticle } from "contexts/articles";
 import { columnList } from "utils/columnList";
 
-const Table = () => {
+const Table = ({ fetchArticles }) => {
   const columns = useMemo(() => columnList, []);
-
-  const [articleList, setArticleList] = useState([]);
   const [isDeleteArticle, setIsDeleteArticle] = useState(false);
   const [deleteData, setDeleteData] = useState({});
-
-  const fetchArticles = async () => {
-    try {
-      const response = await articlesApi.list();
-      setArticleList(response.data.articles);
-    } catch (error) {
-      logger.error(error);
-    }
-  };
-  useEffect(() => {
-    fetchArticles();
-  }, []);
+  const { articleList } = useArticle();
 
   const rowData = articleList.map(item => {
     const newItem = {};

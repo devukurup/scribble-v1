@@ -10,5 +10,8 @@ json.articles @articles do |article|
   json.name article.category ? article.category.name : "-"
   json.first_name article.user.first_name
   json.last_name article.user.last_name
-
 end
+
+json.all @articles.count
+json.published @articles.published.count
+json.draft @articles.draft.count
