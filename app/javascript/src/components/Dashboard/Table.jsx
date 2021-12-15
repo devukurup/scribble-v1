@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Typography, Button } from "@bigbinary/neetoui/v2";
 import { Tooltip } from "@bigbinary/neetoui/v2";
@@ -11,11 +11,32 @@ import { columnList } from "utils/columnList";
 
 const Table = ({ fetchArticles }) => {
   const columns = useMemo(() => columnList, []);
+  const { filterStatus, filterCategory, articleList } = useArticle();
+  const [filteredList, setFilteredList] = useState(articleList);
   const [isDeleteArticle, setIsDeleteArticle] = useState(false);
   const [deleteData, setDeleteData] = useState({});
-  const { articleList } = useArticle();
 
-  const rowData = articleList.map(item => {
+  const filterTableData = () => {
+    var newList = [];
+    if (filterStatus !== "all") {
+      newList = articleList.filter(article => article.status === filterStatus);
+    } else {
+      newList = articleList;
+    }
+
+    if (filterCategory.length > 0) {
+      newList = newList.filter(
+        ({ name }) => filterCategory.indexOf(name) !== -1
+      );
+    }
+    setFilteredList(newList);
+  };
+
+  useEffect(() => {
+    filterTableData();
+  }, [filterStatus, filterCategory]);
+
+  const rowData = filteredList.map(item => {
     const newItem = {};
     newItem.userName = `${item.first_name} ${item.last_name}`;
     newItem.edit_delete = (
@@ -53,7 +74,7 @@ const Table = ({ fetchArticles }) => {
     return newItem;
   });
 
-  const data = useMemo(() => rowData, [articleList]);
+  const data = useMemo(() => rowData, [filteredList]);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -63,7 +84,7 @@ const Table = ({ fetchArticles }) => {
   return (
     <div>
       <Typography style="body1" weight="bold">
-        67 Articles
+        {filteredList.length} Articles
       </Typography>
       <table {...getTableProps()} className="min-w-full">
         <thead>

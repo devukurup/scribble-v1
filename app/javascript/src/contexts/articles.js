@@ -6,9 +6,15 @@ const ArticleContext = React.createContext();
 
 const ArticleProvider = ({ children }) => {
   const [articleList, setArticleList] = useState([]);
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [filterCategory, setfilterCategory] = useState([]);
   const initialValues = {
     articleList,
     setArticleList,
+    filterStatus,
+    setFilterStatus,
+    filterCategory,
+    setfilterCategory,
   };
   return (
     <ArticleContext.Provider value={initialValues}>

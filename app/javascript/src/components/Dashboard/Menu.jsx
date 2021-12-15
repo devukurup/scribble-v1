@@ -6,11 +6,14 @@ import { MenuBar } from "@bigbinary/neetoui/v2/layouts";
 
 import categoriesApi from "apis/categories";
 import Add from "components/Categories/Add";
+import { useArticle } from "contexts/articles";
 import { useCategory } from "contexts/categories";
 
 const Menu = ({ articleData }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
+  const { filterStatus, setFilterStatus, filterCategory, setfilterCategory } =
+    useArticle();
   const { isCategoryUpdated } = useCategory();
   const [categoryList, setCategoryList] = useState([]);
 
@@ -30,9 +33,24 @@ const Menu = ({ articleData }) => {
   return (
     <>
       <MenuBar showMenu={true} title="Articles">
-        <MenuBar.Block label="All" count={articleData.all} active />
-        <MenuBar.Block label="Draft" count={articleData.draft} />
-        <MenuBar.Block label="Published" count={articleData.published} />
+        <MenuBar.Block
+          label="All"
+          onClick={() => setFilterStatus("all")}
+          count={articleData.all}
+          active={filterStatus === "all"}
+        />
+        <MenuBar.Block
+          label="Draft"
+          onClick={() => setFilterStatus("draft")}
+          count={articleData.draft}
+          active={filterStatus === "draft"}
+        />
+        <MenuBar.Block
+          label="Published"
+          onClick={() => setFilterStatus("published")}
+          count={articleData.published}
+          active={filterStatus === "published"}
+        />
 
         <MenuBar.SubTitle
           iconProps={[
@@ -78,6 +96,14 @@ const Menu = ({ articleData }) => {
             key={item.id}
             label={item.name}
             count={item.count}
+            active={filterCategory.indexOf(item.name) !== -1}
+            onClick={() =>
+              filterCategory.indexOf(item.name) === -1
+                ? setfilterCategory([...filterCategory, item.name])
+                : setfilterCategory(
+                    filterCategory.filter(category => category !== item.name)
+                  )
+            }
           />
         ))}
       </MenuBar>
