@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import { Search, Plus, Close } from "@bigbinary/neeto-icons";
 import { Typography, Input } from "@bigbinary/neetoui/v2";
 import { MenuBar } from "@bigbinary/neetoui/v2/layouts";
+import debounce from "lodash/debounce";
 
 import categoriesApi from "apis/categories";
 import Add from "components/Categories/Add";
@@ -14,13 +15,16 @@ const Menu = ({ articleData }) => {
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
   const { filterStatus, setFilterStatus, filterCategory, setfilterCategory } =
     useArticle();
+  const [fetchedCategory, setFetchedCategory] = useState([]);
   const { isCategoryUpdated } = useCategory();
   const [categoryList, setCategoryList] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   const fetchCategories = async () => {
     try {
       const response = await categoriesApi.list();
       setCategoryList(response.data.categories);
+      setFetchedCategory(response.data.categories);
     } catch (error) {
       logger.error(error);
     }
@@ -29,6 +33,21 @@ const Menu = ({ articleData }) => {
   useEffect(() => {
     fetchCategories();
   }, [isCategoryUpdated]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchValue]);
+
+  const debouncedChangeHandler = useMemo(() =>
+    debounce(input => setSearchValue(input), 600)
+  );
+
+  const handleSearch = () => {
+    const suggestions = fetchedCategory.filter(({ name }) =>
+      name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setCategoryList(suggestions);
+  };
 
   return (
     <>
@@ -87,7 +106,10 @@ const Menu = ({ articleData }) => {
         )}
         {!isSearchCollapsed && (
           <div className="p-2">
-            <Input prefix={<Search />} />
+            <Input
+              prefix={<Search />}
+              onChange={e => debouncedChangeHandler(e.target.value)}
+            />
           </div>
         )}
         {categoryList.map(item => (
