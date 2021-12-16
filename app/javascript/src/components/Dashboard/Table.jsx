@@ -80,6 +80,7 @@ const Table = ({ fetchArticles }) => {
     rows,
     prepareRow,
     setFilter,
+    allColumns,
   } = useTable(
     {
       columns,
@@ -90,7 +91,7 @@ const Table = ({ fetchArticles }) => {
 
   return (
     <div>
-      <Header setFilter={setFilter} />
+      <Header setFilter={setFilter} allColumns={allColumns} />
       <Typography style="body1" weight="bold">
         {filteredList.length} Articles
       </Typography>

@@ -4,8 +4,8 @@ import { Search, Plus } from "@bigbinary/neeto-icons";
 import { Input, Button, Dropdown, Checkbox } from "@bigbinary/neetoui/v2";
 import { SubHeader } from "@bigbinary/neetoui/v2/layouts";
 
-const Header = ({ setFilter }) => {
-  const columnList = ["Title", "Categories", "Date", "Author", "Status"];
+const Header = ({ setFilter, allColumns }) => {
+  allColumns = allColumns.filter(column => column.Header !== "");
   return (
     <SubHeader
       actionBlock={
@@ -22,12 +22,17 @@ const Header = ({ setFilter }) => {
               style: "secondary",
             }}
             label="Columns"
-            // onClose={function noRefCheck(){}}
             position="bottom"
           >
-            {columnList.map((item, index) => (
-              <Checkbox key={index} label={item} className="p-2" />
-            ))}
+            <div className="flex flex-col space-y-2">
+              {allColumns.map(column => (
+                <Checkbox
+                  key={column.id}
+                  label={column.Header}
+                  {...column.getToggleHiddenProps()}
+                />
+              ))}
+            </div>
           </Dropdown>
 
           <Button
