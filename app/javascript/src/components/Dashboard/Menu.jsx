@@ -1,23 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import { Search, Plus, Close } from "@bigbinary/neeto-icons";
 import { Typography, Input } from "@bigbinary/neetoui/v2";
 import { MenuBar } from "@bigbinary/neetoui/v2/layouts";
+import debounce from "lodash/debounce";
 
 import categoriesApi from "apis/categories";
 import Add from "components/Categories/Add";
+import { useArticle } from "contexts/articles";
 import { useCategory } from "contexts/categories";
 
-const Menu = () => {
+const Menu = ({ articleData }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
+  const { filterStatus, setFilterStatus, filterCategory, setfilterCategory } =
+    useArticle();
+  const [fetchedCategory, setFetchedCategory] = useState([]);
   const { isCategoryUpdated } = useCategory();
-  const [categoriesList, setCategoriesList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   const fetchCategories = async () => {
     try {
       const response = await categoriesApi.list();
-      setCategoriesList(response.data.categories);
+      setCategoryList(response.data.categories);
+      setFetchedCategory(response.data.categories);
     } catch (error) {
       logger.error(error);
     }
@@ -27,12 +34,42 @@ const Menu = () => {
     fetchCategories();
   }, [isCategoryUpdated]);
 
+  useEffect(() => {
+    handleSearch();
+  }, [searchValue]);
+
+  const debouncedChangeHandler = useMemo(() =>
+    debounce(input => setSearchValue(input), 600)
+  );
+
+  const handleSearch = () => {
+    const suggestions = fetchedCategory.filter(({ name }) =>
+      name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setCategoryList(suggestions);
+  };
+
   return (
     <>
       <MenuBar showMenu={true} title="Articles">
-        <MenuBar.Block label="All" count={13} active />
-        <MenuBar.Block label="Draft" count={2} />
-        <MenuBar.Block label="Published" count={7} />
+        <MenuBar.Block
+          label="All"
+          onClick={() => setFilterStatus("all")}
+          count={articleData.all}
+          active={filterStatus === "all"}
+        />
+        <MenuBar.Block
+          label="Draft"
+          onClick={() => setFilterStatus("draft")}
+          count={articleData.draft}
+          active={filterStatus === "draft"}
+        />
+        <MenuBar.Block
+          label="Published"
+          onClick={() => setFilterStatus("published")}
+          count={articleData.published}
+          active={filterStatus === "published"}
+        />
 
         <MenuBar.SubTitle
           iconProps={[
@@ -69,11 +106,27 @@ const Menu = () => {
         )}
         {!isSearchCollapsed && (
           <div className="p-2">
-            <Input prefix={<Search />} />
+            <Input
+              prefix={<Search />}
+              onChange={e => debouncedChangeHandler(e.target.value)}
+            />
           </div>
         )}
-        {categoriesList.map(item => (
-          <MenuBar.Block key={item.id} label={item.name} count={80} />
+        {categoryList.map(item => (
+          <MenuBar.Block
+            className="capitalize"
+            key={item.id}
+            label={item.name}
+            count={item.count}
+            active={filterCategory.indexOf(item.name) !== -1}
+            onClick={() =>
+              filterCategory.indexOf(item.name) === -1
+                ? setfilterCategory([...filterCategory, item.name])
+                : setfilterCategory(
+                    filterCategory.filter(category => category !== item.name)
+                  )
+            }
+          />
         ))}
       </MenuBar>
     </>

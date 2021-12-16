@@ -5,7 +5,7 @@ import { Typography, Button } from "@bigbinary/neetoui/v2";
 import { Header } from "@bigbinary/neetoui/v2/layouts";
 import { NavLink } from "react-router-dom";
 
-const index = () => {
+const Navbar = () => {
   return (
     <Header
       className="px-4 border"
@@ -29,4 +29,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Navbar;

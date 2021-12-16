@@ -10,7 +10,7 @@ import { useCategory } from "contexts/categories";
 import Delete from "./Delete";
 
 const List = () => {
-  const [categoriesList, setCategoriesList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
   const { isCategoryUpdated } = useCategory();
   const [title, setTitle] = useState("");
   const [editId, setEditId] = useState(0);
@@ -19,7 +19,7 @@ const List = () => {
   const fetchCategories = async () => {
     try {
       const response = await categoriesApi.list();
-      setCategoriesList(response.data.categories);
+      setCategoryList(response.data.categories);
     } catch (error) {
       logger.error(error);
     }
@@ -49,10 +49,10 @@ const List = () => {
   const handleOnDragEnd = result => {
     if (!result.destination) return;
 
-    const items = Array.from(categoriesList);
+    const items = Array.from(categoryList);
     const reorderedItem = items.splice(Number(result.source.index), 1);
     items.splice(Number(result.destination.index), 0, ...reorderedItem);
-    setCategoriesList(items);
+    setCategoryList(items);
     categoryUpdate({
       id: result.draggableId,
       payload: { category: { sequence: result.destination.index + 1 } },
@@ -65,7 +65,7 @@ const List = () => {
         <Droppable droppableId="categories">
           {provided => (
             <ul {...provided.droppableProps} ref={provided.innerRef}>
-              {categoriesList.map(({ id, name }, index) => {
+              {categoryList.map(({ id, name }, index) => {
                 return (
                   <Draggable key={id} draggableId={String(id)} index={index}>
                     {provided => (

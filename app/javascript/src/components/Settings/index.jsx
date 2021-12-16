@@ -4,7 +4,7 @@ import Container from "components/Container";
 
 import Menu from "./Menu";
 
-const index = () => {
+const Settings = () => {
   return (
     <Container>
       <div className="flex">
@@ -15,4 +15,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Settings;

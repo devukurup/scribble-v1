@@ -2,6 +2,7 @@
 
 class CategoriesController < ApplicationController
   before_action :load_category, only: %i[update destroy]
+  before_action :update_articles_category, only: :destroy
 
   def index
     @categories = current_user.categories.order("sequence")
@@ -41,6 +42,12 @@ class CategoriesController < ApplicationController
       @category = Category.find_by_id(params[:id])
       unless @category
         render status: :not_found, json: { error: t("category.not_found") }
+      end
+    end
+
+    def update_articles_category
+      unless @category.articles.update(category_id: nil)
+        render status: :unprocessable_entity, json: { error: t("category.articles_update_error") }
       end
     end
 end

@@ -17,6 +17,18 @@ class ArticleTest < ActiveSupport::TestCase
     assert_includes @article.errors.full_messages, "Title can't be blank"
   end
 
+  def test_article_should_be_invalid_without_content
+    @article.content = ""
+    assert @article.invalid?
+    assert_includes @article.errors.full_messages, "Content can't be blank"
+  end
+
+  def test_article_should_be_invalid_with_content_length_less_than_minimum_length
+    @article.content = "a" * 8
+    assert @article.invalid?
+    assert_includes @article.errors.full_messages, "Content is too short (minimum is 10 characters)"
+  end
+
   def test_article_should_be_invalid_without_user
     @article.user = nil
     assert @article.invalid?
@@ -32,7 +44,7 @@ class ArticleTest < ActiveSupport::TestCase
   def test_date_gets_updated_when_status_is_published
     @article.status = "published"
     @article.save!
-    assert_equal Date.current, @article.date
+    assert_equal Date.current.strftime("%B %dth, %Y"), @article.date
   end
 
   def test_date_should_not_get_updated_when_status_is_draft
