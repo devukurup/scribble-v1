@@ -6,7 +6,6 @@ import articlesApi from "apis/articles";
 import Container from "components/Container";
 import { useArticle } from "contexts/articles";
 
-import Header from "./Header";
 import Menu from "./Menu";
 import Table from "./Table";
 
@@ -44,7 +43,6 @@ const Dashboard = () => {
           <Menu articleData={articleData} />
         </div>
         <div className="flex flex-col mx-10 mt-5 w-full">
-          <Header />
           <Table fetchArticles={fetchArticles} />
         </div>
       </div>

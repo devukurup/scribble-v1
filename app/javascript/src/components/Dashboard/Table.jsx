@@ -3,11 +3,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Typography, Button } from "@bigbinary/neetoui/v2";
 import { Tooltip } from "@bigbinary/neetoui/v2";
 import { Link } from "react-router-dom";
-import { useTable } from "react-table";
+import { useFilters, useTable } from "react-table";
 
 import Delete from "components/Articles/Delete";
 import { useArticle } from "contexts/articles";
 import { columnList } from "utils/columnList";
+
+import Header from "./Header";
 
 const Table = ({ fetchArticles }) => {
   const columns = useMemo(() => columnList, []);
@@ -63,11 +65,7 @@ const Table = ({ fetchArticles }) => {
         </Tooltip>
       </div>
     );
-    newItem.title = (
-      <Typography weight="medium" className="text-indigo-500">
-        {item.title}
-      </Typography>
-    );
+    newItem.title = item.title;
     newItem.date = item.date;
     newItem.name = item.name;
     newItem.status = item.status;
@@ -75,14 +73,24 @@ const Table = ({ fetchArticles }) => {
   });
 
   const data = useMemo(() => rowData, [filteredList]);
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    setFilter,
+  } = useTable(
+    {
       columns,
       data,
-    });
+    },
+    useFilters
+  );
 
   return (
     <div>
+      <Header setFilter={setFilter} />
       <Typography style="body1" weight="bold">
         {filteredList.length} Articles
       </Typography>
