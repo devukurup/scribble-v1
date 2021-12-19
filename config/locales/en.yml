@@ -10,3 +10,7 @@ en:
     not_found: "Article Not Found"
     successfully_deleted: "Successfully deleted"
     successfully_updated: "Successfully updated"
+  site:
+    not_found: "Site details not found."
+    update_error: "Couldn't update site details."
+    successfully_updated: "Successfully updated site details."

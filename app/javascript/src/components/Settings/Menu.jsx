@@ -7,37 +7,41 @@ import { NavLink } from "react-router-dom";
 const Menu = () => {
   return (
     <div className=" flex flex-col border-r-2 w-1/4 h-screen space-y-4 p-2">
-      <div className="flex p-3 space-x-2">
-        <div>
-          <Settings size={28} color="#9CA3AF" />
-        </div>
-        <div className="flex flex-col">
+      <NavLink to="/settings">
+        <div className="flex p-3 space-x-2">
           <div>
-            <Typography weight="semibold">General</Typography>
+            <Settings size={28} color="#9CA3AF" />
           </div>
-          <div>
-            <Typography style="body3">
-              Page Title, Brand Name & Meta Description
-            </Typography>
+          <div className="flex flex-col">
+            <div>
+              <Typography weight="semibold">General</Typography>
+            </div>
+            <div>
+              <Typography style="body3">
+                Page Title, Brand Name & Meta Description
+              </Typography>
+            </div>
           </div>
         </div>
-      </div>
+      </NavLink>
 
-      <div className="flex p-3 space-x-2">
-        <div>
-          <Repeat size={28} color="#9CA3AF" />
-        </div>
-        <div className="flex flex-col">
+      <NavLink to="/settings/redirection">
+        <div className="flex p-3 space-x-2">
           <div>
-            <Typography weight="semibold">Redirections</Typography>
+            <Repeat size={28} color="#9CA3AF" />
           </div>
-          <div>
-            <Typography style="body3">
-              Create & configure redirection rules
-            </Typography>
+          <div className="flex flex-col">
+            <div>
+              <Typography weight="semibold">Redirections</Typography>
+            </div>
+            <div>
+              <Typography style="body3">
+                Create & configure redirection rules
+              </Typography>
+            </div>
           </div>
         </div>
-      </div>
+      </NavLink>
 
       <NavLink to="/settings/categories">
         <div className="flex p-3 space-x-2">
