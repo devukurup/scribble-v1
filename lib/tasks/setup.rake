@@ -15,10 +15,15 @@ end
 def create_sample_data!
   puts 'Seeding with sample data...'
   create_user! email: 'oliver@example.com'
+  create_site!
 end
 
 def create_user!(options = {})
   user_attributes = { first_name: 'Oliver', last_name: 'Smith' }
   attributes = user_attributes.merge options
   User.create! attributes
+end
+
+def create_site!
+  Site.create!(name: 'Spinkart')
 end
