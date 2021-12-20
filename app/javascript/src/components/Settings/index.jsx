@@ -12,6 +12,10 @@ const Settings = () => {
   const [isPasswordCollapsed, setIsPasswordCollapsed] = useState(true);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const regex = /^(?:[0-9]+[a-z]|[a-z]+[0-9])[a-z0-9]*$/i;
+  const [isPasswordLength, setIsPasswordLength] = useState(false);
+  const [isPasswordMatch, setIsPasswordMatch] = useState(false);
 
   const fetchSiteDetails = async () => {
     try {
@@ -29,13 +33,35 @@ const Settings = () => {
     fetchSiteDetails();
   }, []);
 
+  const handleChange = e => {
+    const currentPassword = e.target.value;
+    setPassword(currentPassword);
+    if (currentPassword.length >= 6) {
+      setIsPasswordLength(true);
+    } else {
+      setIsPasswordLength(false);
+    }
+
+    if (currentPassword.match(regex)) {
+      setIsPasswordMatch(true);
+    } else {
+      setIsPasswordMatch(false);
+    }
+  };
+
   const updateSiteDetails = async () => {
-    const current_password = password ? password : null;
-    await sitesApi.update({
-      payload: {
-        site: { name, password: current_password },
-      },
-    });
+    if (either(isNil, isEmpty)(name)) {
+      setErrorMessage("Site Name is required");
+    } else if (
+      !(!isPasswordCollapsed && (!isPasswordLength || !isPasswordMatch))
+    ) {
+      const currentPassword = password ? password : null;
+      await sitesApi.update({
+        payload: {
+          site: { name, password: currentPassword },
+        },
+      });
+    }
   };
 
   return (
@@ -45,12 +71,18 @@ const Settings = () => {
         <General
           name={name}
           password={password}
-          setPassword={setPassword}
           setName={setName}
           isPasswordCollapsed={isPasswordCollapsed}
           setIsPasswordCollapsed={setIsPasswordCollapsed}
           updateSiteDetails={updateSiteDetails}
           fetchSiteDetails={fetchSiteDetails}
+          errorMessage={errorMessage}
+          handleChange={handleChange}
+          regex={regex}
+          isPasswordMatch={isPasswordMatch}
+          isPasswordLength={isPasswordLength}
+          setPassword={setPassword}
+          setErrorMessage={setErrorMessage}
         />
       </div>
     </Container>
