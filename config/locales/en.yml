@@ -14,3 +14,8 @@ en:
     not_found: "Site details not found."
     update_error: "Couldn't update site details."
     successfully_updated: "Successfully updated site details."
+  redirection:
+    successfully_created: "Successfully created new redirection"
+    not_found: "Redirection not found"
+    successfully_deleted: "Successfully deleted"
+    successfully_updated: "Successfully updated"
